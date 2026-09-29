@@ -1,9 +1,9 @@
-type LoginButtonProps = {
+type SubmitButtonProps = {
   type?: "button" | "submit" | "reset";
   buttonName: string;
 };
 
-const LoginButton = ({ type, buttonName }: LoginButtonProps) => {
+const SubmitButton = ({ type, buttonName }: SubmitButtonProps) => {
   return (
     <button
       type={type}
@@ -13,4 +13,4 @@ const LoginButton = ({ type, buttonName }: LoginButtonProps) => {
     </button>
   );
 };
-export default LoginButton;
+export default SubmitButton;

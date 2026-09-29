@@ -2,9 +2,9 @@ type InputFieldProps = {
   id: string;
   name: string;
   type: string;
-  value: string;
-  placeholder: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  value?: string;
+  placeholder?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   label: string;
   labelName?: string;
 };

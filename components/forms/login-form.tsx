@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import InputField from "../common/input/input-field";
-import LoginButton from "../common/button/login-button";
+import SubmitButton from "../common/button/submit-button";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -65,7 +65,7 @@ const LoginForm = () => {
         />
       </div>
       <div className="flex justify-center">
-        <LoginButton type="submit" buttonName="Login" />
+        <SubmitButton type="submit" buttonName="Login" />
       </div>
     </form>
   );
