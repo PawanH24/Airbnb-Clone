@@ -1,67 +1,52 @@
 "use client";
-import { useState } from "react";
-import InputField from "../common/input/input-field";
+
 import SubmitButton from "../common/button/submit-button";
+import { SubmitHandler, useForm } from "react-hook-form";
+import InputField from "../common/input/input-field";
+
+type TLoginInput = {
+  email: string;
+  password: string;
+};
 
 const LoginForm = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [error, setError] = useState({});
+  const { register, handleSubmit } = useForm<TLoginInput>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<TLoginInput> = (data) => {
+    console.log("form submitted", data);
+    //const data = new FormData();
+    // data.append("email", formData.email);
+    // data.append("password", formData.password);
 
-    const message: { email?: string; password?: string } = {};
-    let formIsValid = true;
-
-    if (formData.email.trim() === "") {
-      message.email = "Email should not be empty.";
-      formIsValid = false;
-    }
-    if (formData.password.trim() === "") {
-      message.password = "Password should not be empty.";
-      formIsValid = false;
-    }
-    setError(message);
-
-    if (formIsValid) {
-      const data = new FormData();
-      data.append("email", formData.email);
-      data.append("password", formData.password);
-
-      fetch("http://localhost:8080/v1/auth/login", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" },
-      });
-      console.log("logged in");
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    fetch("http://localhost:8080/v1/auth/login", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    });
+    console.log("logged in");
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="justify-center">
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col gap-1.5 justify-center m-5">
         <InputField
-          label="email"
+          register={register}
           id="email"
-          name="email"
           type="text"
-          value={formData.email}
-          onChange={handleInputChange}
-          placeholder="Enter email"
+          name="email"
+          placeholder="Enter your Email"
         />
         <InputField
-          label="password"
+          register={register}
           id="password"
+          type="password"
           name="password"
-          type="text"
-          value={formData.password}
-          onChange={handleInputChange}
-          placeholder="Enter password"
+          placeholder="Enter your password"
         />
       </div>
       <div className="flex justify-center">

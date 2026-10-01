@@ -1,37 +1,33 @@
-type InputFieldProps = {
+import type { FieldValues, Path, UseFormRegister } from "react-hook-form";
+
+type InputFieldProps<T extends FieldValues> = {
   id: string;
-  name: string;
-  type: string;
-  value?: string;
+  name: Path<T>;
+  type?: "text" | "radio" | "password";
   placeholder?: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  label: string;
-  labelName?: string;
+  label?: string;
+  register: UseFormRegister<T>;
 };
 
-const InputField = ({
+function InputField<T extends FieldValues>({
   id,
   name,
   type,
-  value,
   placeholder,
-  onChange,
   label,
-  labelName,
-}: InputFieldProps) => {
+  register,
+}: InputFieldProps<T>) {
   return (
     <div className="m-2 ">
-      <label htmlFor={label}>{labelName}</label>
+      <label htmlFor={id}>{label}</label>
       <input
         id={id}
-        name={name}
         type={type}
-        value={value}
+        {...register(name)}
         placeholder={placeholder}
-        onChange={onChange}
         className="border border-gray-300 rounded-lg mx-1 px-2 py-1"
       />
     </div>
   );
-};
+}
 export default InputField;

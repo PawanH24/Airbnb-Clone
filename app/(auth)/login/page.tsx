@@ -14,9 +14,11 @@ const LoginPage = () => {
     <main className="relative flex h-screen items-center justify-center">
       <div className="absolute inset-0 -z-10">
         <Image
+          height={1000}
+          width={1000}
           src={bgImage}
           alt="bgImage"
-          className="absolute  -z-5 h-full w-full object-cover "
+          className="absolute -z-5 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-black/50" />
       </div>
@@ -29,6 +31,8 @@ const LoginPage = () => {
           <Link href="/forgot-password">
             <p>Forgot password</p>
           </Link>
+        </div>
+        <div className="text-xs text-gray-400 flex gap-2 ">
           <p>Dont have an Account ? </p>{" "}
           <Link href="/register">
             <span>Create Account</span>
