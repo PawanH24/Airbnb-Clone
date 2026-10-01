@@ -1,15 +1,9 @@
 "use client";
 import SubmitButton from "../common/button/submit-button";
 import { SubmitHandler, useForm } from "react-hook-form";
-
-type TRegisterInput = {
-  email: string;
-  password: string;
-  fullName: string;
-  phone: string;
-  role: "USER" | "HOST";
-  profile_image: FileList | "";
-};
+import { TRegisterInput } from "../../types/auth.types";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { registerSchema } from "@/schema/auth.schema";
 
 const RegistrationForm = () => {
   const { register, handleSubmit } = useForm<TRegisterInput>({
@@ -21,6 +15,7 @@ const RegistrationForm = () => {
       role: "USER",
       profile_image: "",
     },
+    resolver: yupResolver(registerSchema),
   });
 
   const onSubmit: SubmitHandler<TRegisterInput> = (data) => {

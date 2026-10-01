@@ -7,6 +7,7 @@ type InputFieldProps<T extends FieldValues> = {
   placeholder?: string;
   label?: string;
   register: UseFormRegister<T>;
+  error?: string;
 };
 
 function InputField<T extends FieldValues>({
@@ -16,17 +17,19 @@ function InputField<T extends FieldValues>({
   placeholder,
   label,
   register,
+  error,
 }: InputFieldProps<T>) {
   return (
-    <div className="m-2 ">
+    <div className=" flex flex-col m-2 ">
       <label htmlFor={id}>{label}</label>
       <input
         id={id}
         type={type}
         {...register(name)}
         placeholder={placeholder}
-        className="border border-gray-300 rounded-lg mx-1 px-2 py-1"
+        className={`border rounded-lg mx-1 px-2 py-1 ${error ? "border-red-500 focus:outline-red-500" : "border-gray-300 focus:outline-gray-300"}`}
       />
+      <small className="text-red-500 pl-2 pt-1">{error}</small>
     </div>
   );
 }

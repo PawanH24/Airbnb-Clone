@@ -1,14 +1,13 @@
 type UploadFieldProps = {
   id: string;
   name: string;
-  label: string;
-  labelName?: string;
+  label?: string;
 };
 
-const FileUpload = ({ label, labelName, id, name }: UploadFieldProps) => {
+const FileUpload = ({ label, id, name }: UploadFieldProps) => {
   return (
     <div className="m-2 ">
-      <label htmlFor={label}>{labelName}</label>
+      <label htmlFor={id}>{label}</label>
       <input id={id} name={name} type="file" />
     </div>
   );

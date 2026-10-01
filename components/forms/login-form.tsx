@@ -3,18 +3,21 @@
 import SubmitButton from "../common/button/submit-button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputField from "../common/input/input-field";
-
-type TLoginInput = {
-  email: string;
-  password: string;
-};
+import { loginSchema } from "@/schema/auth.schema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { TLoginInput } from "@/types/auth.types";
 
 const LoginForm = () => {
-  const { register, handleSubmit } = useForm<TLoginInput>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TLoginInput>({
     defaultValues: {
       email: "",
       password: "",
     },
+    resolver: yupResolver(loginSchema),
   });
 
   const onSubmit: SubmitHandler<TLoginInput> = (data) => {
@@ -30,16 +33,18 @@ const LoginForm = () => {
     });
     console.log("logged in");
   };
+  console.log(errors);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col gap-1.5 justify-center m-5">
+      <div className="flex flex-col justify-center m-5">
         <InputField
           register={register}
           id="email"
           type="text"
           name="email"
           placeholder="Enter your Email"
+          error={errors?.email?.message}
         />
         <InputField
           register={register}
@@ -47,6 +52,7 @@ const LoginForm = () => {
           type="password"
           name="password"
           placeholder="Enter your password"
+          error={errors?.password?.message}
         />
       </div>
       <div className="flex justify-center">
