@@ -6,6 +6,8 @@ import InputField from "../common/input/input-field";
 import { loginSchema } from "@/schema/auth.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { TLoginInput } from "@/types/auth.types";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "@/api/auth.api";
 
 const LoginForm = () => {
   const {
@@ -20,20 +22,25 @@ const LoginForm = () => {
     resolver: yupResolver(loginSchema),
   });
 
+  const { mutate } = useMutation({
+    mutationFn: login,
+    onSuccess: (response) => {
+      console.log("on success", response);
+    },
+    onError: (error) => {
+      console.log("on error", error);
+    },
+  });
+
   const onSubmit: SubmitHandler<TLoginInput> = (data) => {
     console.log("form submitted", data);
     //const data = new FormData();
     // data.append("email", formData.email);
     // data.append("password", formData.password);
 
-    fetch("http://localhost:8080/v1/auth/login", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
-    });
+    mutate(data);
     console.log("logged in");
   };
-  console.log(errors);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

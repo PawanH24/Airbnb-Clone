@@ -84,7 +84,8 @@ const RegistrationForm = () => {
         </label>
         <label
           htmlFor="role-host"
-          className="flex w-36 cursor-pointer items-center justify-center gap-2 rounded-lg border border-gray-300 px-4 py-1"
+          className="flex w-36 cursor-pointer items-center
+          v justify-center gap-2 rounded-lg border border-gray-300 px-4 py-1"
         >
           <input
             id="role-host"
