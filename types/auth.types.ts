@@ -9,6 +9,12 @@ export type TLoginInput = yup.InferType<typeof loginSchema>;
 export type TRegisterInput = yup.InferType<typeof registerSchema>;
 export type TPropertyFormData = yup.InferType<typeof propertyFormSchema>;
 
+export enum Role {
+  ADMIN = "ADMIN",
+  HOST = "HOST",
+  USER = "USER",
+}
+
 // export type TLoginInput = {
 //   email: string;
 //   password: string;

@@ -33,4 +33,20 @@ export const propertyFormSchema = yup.object({
     .oneOf(["apartment", "house", "condo", "townhouse", "tree house"])
     .required("Must select a property type"),
   room: yup.number().required("Atleast one room is required"),
+  propertyPrice: yup.number().required("price required"),
+  propertyPriceType: yup
+    .string()
+    .oneOf(["per_day", "per_week", "per_month"])
+    .required("Must select a property price type"),
+  country: yup.string().required("Must enter a country"),
+  city: yup.string().required("Must enter a city"),
+  street: yup.string().required("Must enter a street"),
+  zipcode: yup.string().required("Must enter a zipcode"),
+  mainImage: yup.mixed<File>().required("Main image is required"),
+  galleryImage: yup
+    .array()
+    .of(yup.mixed<File>().required())
+    .min(1, "At least one gallery image is required")
+    .max(8, "Maximum 8 imaages allowed")
+    .required("Gallery images are required"),
 });
