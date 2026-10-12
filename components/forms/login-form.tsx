@@ -6,7 +6,7 @@ import InputField from "../common/input/input-field";
 import { loginSchema } from "@/schema/auth.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { TLoginInput } from "@/types/auth.types";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { login } from "@/api/auth.api";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ import { Role } from "@/types/auth.types";
 
 const LoginForm = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -28,16 +29,20 @@ const LoginForm = () => {
 
   const { mutate } = useMutation({
     mutationFn: login,
-    onSuccess: (response) => {
-      console.log("on success", response);
+    onSuccess: async (response) => {
+      await queryClient.invalidateQueries({ queryKey: ["profile"] });
       toast.success(response.message ?? "Login success");
-      if (response.data.user.role === Role.HOST) {
-        router.replace("/property/add");
+      if (response.data.user.role === Role.ADMIN) {
+        router.replace("/admin");
+      } else if (response.data.user.role === Role.HOST) {
+        router.replace("/host");
+      } else {
+        router.replace("/");
       }
     },
     onError: (error) => {
       console.log("on error", error);
-      toast.error(error.message ?? "Login failed");
+      toast.error(error?.message ?? "Login failed");
     },
   });
 

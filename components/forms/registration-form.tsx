@@ -4,6 +4,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { TRegisterInput } from "../../types/auth.types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "@/schema/auth.schema";
+import { useMutation } from "@tanstack/react-query";
+import { register as registerUser } from "@/api/auth.api";
+import toast from "react-hot-toast";
 
 const RegistrationForm = () => {
   const { register, handleSubmit } = useForm<TRegisterInput>({
@@ -13,13 +16,26 @@ const RegistrationForm = () => {
       fullName: "",
       phone: "",
       role: "USER",
-      profile_image: "",
     },
     resolver: yupResolver(registerSchema),
   });
 
+  const { mutate } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: (response) => {
+      console.log("registration successful", response);
+      toast.success(response.message ?? "Registration successful");
+    },
+
+    onError: (error) => {
+      console.log("registration error", error);
+      toast.error(error.message ?? "Registration failed");
+    },
+  });
+
   const onSubmit: SubmitHandler<TRegisterInput> = (data) => {
     console.log("registered", data);
+    mutate(data);
   };
 
   return (

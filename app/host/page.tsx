@@ -1,14 +1,14 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Properties",
+  title: "Host",
 };
 
-const PropertyPage = () => {
+const HostPage = () => {
   return (
     <main>
-      <h1>Properties Page</h1>
+      <h1>Host DashboardPage</h1>
     </main>
   );
 };
-export default PropertyPage;
+export default HostPage;

@@ -1,7 +1,7 @@
 const AllHostsPage = () => {
   return (
     <main>
-      <h1>Admin All User Page</h1>
+      <h1>Admin All Host Page</h1>
     </main>
   );
 };

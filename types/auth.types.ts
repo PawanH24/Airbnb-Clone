@@ -4,6 +4,7 @@ import {
   registerSchema,
 } from "@/schema/auth.schema";
 import * as yup from "yup";
+import { TImage, TResponse } from "./global.types";
 
 export type TLoginInput = yup.InferType<typeof loginSchema>;
 export type TRegisterInput = yup.InferType<typeof registerSchema>;
@@ -14,6 +15,15 @@ export enum Role {
   HOST = "HOST",
   USER = "USER",
 }
+
+export type TUser = {
+  _id: string;
+  full_name: string;
+  email: string;
+  phone?: string;
+  profile_image: TImage;
+  role: Role;
+} & TResponse;
 
 // export type TLoginInput = {
 //   email: string;

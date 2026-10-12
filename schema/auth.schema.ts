@@ -20,7 +20,7 @@ export const registerSchema = yup.object({
     .string()
     .oneOf(["USER", "HOST"], "Invalid role selected")
     .required(),
-  profile_image: yup.mixed(),
+  profile_image: yup.mixed<File>().optional(),
 });
 
 export const propertyFormSchema = yup.object({
