@@ -18,7 +18,7 @@ const AuthProvider = ({
     refetchOnWindowFocus: "always",
     retry: false,
   });
-
+  console.log("AuthProvider Cache Data:", data);
   //*logout
   const { mutate, isPending } = useMutation({
     mutationFn: logout,
