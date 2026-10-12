@@ -22,7 +22,9 @@ function withAuth<P extends object>(
       if (isLoading) return;
 
       if (!isAuthenticated || !user) {
-        toast.error("Login to continue");
+        if (window.location.pathname !== "/login") {
+          toast.error("Login to continue");
+        }
         router.replace("/login");
         return;
       }
