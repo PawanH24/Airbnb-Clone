@@ -45,9 +45,15 @@ export const getProfile = async () => {
     const response = await api.get("/v1/auth/getProfile");
     return response.data;
   } catch (error: unknown) {
-    console.log(error);
     if (error instanceof AxiosError) {
-      throw error.response?.data;
+      // If it's a 401 (Unauthorized) or 404, just return null.
+      // This is expected for guests. Don't log it as an error.
+      if (error.response?.status === 401 || error.response?.status === 404) {
+        return null;
+      }
     }
+    // Only log actual unexpected errors
+    console.log("Unexpected getProfile error:", error);
+    throw error;
   }
 };

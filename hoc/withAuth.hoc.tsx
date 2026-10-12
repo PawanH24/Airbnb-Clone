@@ -17,30 +17,25 @@ function withAuth<P extends object>(
 
     const { isLoading, isAuthenticated, user } = useAuth();
     const router = useRouter();
-    const wasAuthenticated = useRef(false);
 
     useEffect(() => {
       if (isLoading) return;
 
-      if (isAuthenticated && user) {
-        wasAuthenticated.current = true;
-      }
-
       if (!isAuthenticated || !user) {
-        if (!wasAuthenticated.current) {
-          toast.error("Login to continue");
-        }
+        toast.error("Login to continue");
         router.replace("/login");
         return;
       }
       if (roles && !roles.includes(user.role)) {
         toast.error("You don't have permission to access this page");
-
-        if (user.role === Role.HOST) router.replace("/host");
-        else router.replace("/");
+        if (user.role === Role.HOST) {
+          router.replace("/host");
+        } else {
+          router.replace("/");
+        }
         return;
       }
-    }, [isLoading, isAuthenticated, user, router]);
+    }, [isLoading, isAuthenticated, user, router, roles]);
 
     if (isLoading) {
       return (
