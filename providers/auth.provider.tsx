@@ -18,7 +18,7 @@ const AuthProvider = ({
     refetchOnWindowFocus: "always",
     retry: false,
   });
-  console.log("AuthProvider Cache Data:", data);
+
   //*logout
   const { mutate, isPending } = useMutation({
     mutationFn: logout,
@@ -37,9 +37,9 @@ const AuthProvider = ({
   return (
     <AuthContext.Provider
       value={{
-        user: data?.data ?? null,
+        user: data?.data.user ?? null,
         isLoading: isLoading || isPending,
-        isAuthenticated: !!data?.data,
+        isAuthenticated: !!data?.data.user,
         login: () => {},
         logout: mutate,
         createAccount: () => {},
