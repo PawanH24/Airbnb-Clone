@@ -29,8 +29,8 @@ const LoginForm = () => {
 
   const { mutate } = useMutation({
     mutationFn: login,
-    onSuccess: async (response) => {
-      await queryClient.invalidateQueries({ queryKey: ["profile"] });
+    onSuccess: (response) => {
+      queryClient.setQueryData(["profile"], response);
       toast.success(response.message ?? "Login success");
       if (response.data.user.role === Role.ADMIN) {
         router.replace("/admin");

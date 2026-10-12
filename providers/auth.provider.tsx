@@ -25,8 +25,9 @@ const AuthProvider = ({
     onSuccess: (response) => {
       router.replace("/");
       toast.success(response.message ?? "Logout success");
-      // queryClient.invalidateQueries({queryKey:['profile']})
+
       queryClient.setQueryData(["profile"], null);
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
     },
     onError: (error) => {
       toast.error(error.message ?? "something went wrong");
